@@ -3,7 +3,7 @@ import sys
 import os
 import subprocess
 
-def generate_outfile_name(identifier_split, strand):]
+def generate_outfile_name(identifier_split, strand):
 	mate = {'forward': 'R1', 'reverse': 'R2'}
 
 	if len(identifier_split) > 2:
@@ -17,11 +17,9 @@ wf_dir = sys.argv[1]
 ctd_params = args_from_file(wf_dir + '/WORKFLOW-CTD')
 ctd_files = args_from_file(wf_dir + '/IN-FILESTOSTAGE')
 
-data_path = os.path.join(wfdir, 'data')
-result_path = os.path.join(wfdir, 'result')
-log_path = os.path.join(wfdir 'log')
-
-(data_path, fileName)
+data_path = os.path.join(wf_dir, 'data')
+result_path = os.path.join(wf_dir, 'result')
+log_path = os.path.join(wf_dir, 'log')
 
 for s in ['forward', 'reverse']:
 	command = 'cat '
@@ -29,7 +27,7 @@ for s in ['forward', 'reverse']:
 	for fi in ctd_files[s]:
 		fileName = fi.split('/')[-1]
 		if fi.endswith('.gz'):
-			cmd = "gzip -d %s%s" % (data_path, fileName)
+			cmd = "gzip -d %s" % os.path.join(data_path, fileName)
 			os.system(cmd)
 			command += '%s ' %  os.path.join(data_path, fileName.replace('.gz', ''))
 		else:
@@ -39,5 +37,5 @@ for s in ['forward', 'reverse']:
 	identifier = generate_outfile_name(identifier_split, s)
 	outfile = os.path.join(result_path, identifier)
 	command += '> %s' % outfile
-	subprocess.call(command.split())
+	subprocess.call(command, shell=True)
 

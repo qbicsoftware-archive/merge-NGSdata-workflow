@@ -1,5 +1,5 @@
 #!/bin/bash
-module load qbic/anaconda2
+module load qbic/anaconda2/2.1.0
 
 workflowDir=$(cat wfdir)
 #parse using CTDopts and run workflow
